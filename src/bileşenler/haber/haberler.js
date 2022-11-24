@@ -87,6 +87,15 @@ const data = [
     ucuncuParagraf: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    baslik: 'FB - MİLANO BASKETBOL MAÇI',
+    tarih: '24 Kasım 2022',
+    ilkParagraf: `FB, deplasmanda Milano ile karşılaşıyor`,
+
+    ikinciParagraf: `FB, deplasmanda Milano ile karşılaşıyor`,
+
+    ucuncuParagraf: `FB, deplasmanda Milano ile karşılaşıyor`
   }
 ];
 
@@ -115,3 +124,57 @@ const data = [
   Adım 5: Veri dizisine yeni haber nesnesi eklemeyi deneyin. Diğer verilerle aynı yapıda olmasına dikkat edin.
   Eklediğiniz yeni haberi görmek için sayfayı yenileyin.
 */
+
+function haberYapici (news) {
+
+  let newsDiv = document.createElement("div");
+  newsDiv.classList.add("article");
+
+  let newsHeader = document.createElement("h2");
+  newsHeader.textContent = news.baslik;
+  newsDiv.appendChild(newsHeader);
+
+  let newsDate = document.createElement("p");
+  newsDate.classList.add("tarih") 
+  newsDate.textContent = news.tarih;
+  newsDiv.appendChild(newsDate);
+
+  let newsFirstP = document.createElement("p");
+  newsFirstP.textContent = news.ilkParagraf;
+  newsDiv.appendChild(newsFirstP);
+
+  let newsSecondP = document.createElement("p");
+  newsSecondP.textContent = news.ikinciParagraf;
+  newsDiv.appendChild(newsSecondP);
+
+  let newsThirdP = document.createElement("p");
+  newsThirdP.textContent = news.ucuncuParagraf;
+  newsDiv.appendChild(newsThirdP);
+
+  let newsSpan = document.createElement("span");
+  newsSpan.classList.add("expandButton");
+  newsSpan.textContent = "+";
+
+  newsSpan.addEventListener("click", (event) => {
+
+    if(document.querySelector(".article-open") != null && !event.target.parentElement.classList.contains("article-open")){
+      document.querySelector(".article-open").classList.remove("article-open");
+    }
+
+    event.target.parentElement.classList.toggle("article-open");
+  });
+
+  newsDiv.appendChild(newsSpan);
+
+  return newsDiv;
+}
+
+let articles = document.querySelector(".articles");
+
+let haberler = data.map(item => {
+  return haberYapici(item);
+});
+
+haberler.forEach(haber =>  {
+  articles.appendChild(haber);
+});
